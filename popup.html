@@ -12,6 +12,8 @@
       color: #fff;
       padding: 20px;
       width: 320px;
+      position: relative;
+      overflow: hidden;
     }
     h3 {
       text-align: center;
@@ -51,18 +53,33 @@
       transition: background-color 0.3s;
     }
     button:hover { background-color: #17a44d; }
-    #toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1db954;
-      padding: 10px 20px;
+    /* Modern Snackbar */
+    #snackbar {
+      visibility: hidden;
+      min-width: 250px;
+      background-color: #323232;
+      color: #fff;
+      text-align: center;
       border-radius: 4px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
       font-size: 0.9rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s;
+    }
+    #snackbar.show {
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+    @keyframes fadein {
+      from { bottom: 0; opacity: 0; }
+      to { bottom: 30px; opacity: 1; }
+    }
+    @keyframes fadeout {
+      from { bottom: 30px; opacity: 1; }
+      to { bottom: 0; opacity: 0; }
     }
   </style>
 </head>
@@ -85,7 +102,7 @@
   <button id="preview">Önizleme Yap</button>
   <button id="disable">Döngüyü Kapat</button>
   
-  <div id="toast"></div>
+  <div id="snackbar"></div>
   
   <script src="popup.js"></script>
 </body>

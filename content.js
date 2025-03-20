@@ -1,3 +1,4 @@
+// content.js - Geliştirilmiş Versiyon
 let loopActive = false;
 let loopStart = 60;
 let loopEnd = 130;
@@ -14,18 +15,20 @@ function showPageToast(message) {
   if (!toast) {
     toast = document.createElement('div');
     toast.id = 'ytm-loop-toast';
-    toast.style.position = 'fixed';
-    toast.style.bottom = '20px';
-    toast.style.left = '50%';
-    toast.style.transform = 'translateX(-50%)';
-    toast.style.backgroundColor = '#1db954';
-    toast.style.color = '#fff';
-    toast.style.padding = '10px 20px';
-    toast.style.borderRadius = '4px';
-    toast.style.fontSize = '0.9rem';
-    toast.style.zIndex = 9999;
-    toast.style.opacity = 0;
-    toast.style.transition = 'opacity 0.5s';
+    Object.assign(toast.style, {
+      position: 'fixed',
+      bottom: '20px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      backgroundColor: '#1db954',
+      color: '#fff',
+      padding: '10px 20px',
+      borderRadius: '4px',
+      fontSize: '0.9rem',
+      zIndex: 9999,
+      opacity: 0,
+      transition: 'opacity 0.5s'
+    });
     document.body.appendChild(toast);
   }
   toast.textContent = message;
@@ -34,7 +37,7 @@ function showPageToast(message) {
 }
 
 function findPlayer() {
-  // Hem video hem audio elementini deniyoruz.
+  // YouTube Music oynatıcısını (video veya audio) bulmaya yönelik daha sağlam seçim
   const media = document.querySelector('video, audio');
   if (!media) {
     logError("Oynatıcı elementi bulunamadı.");
@@ -48,6 +51,12 @@ function attachLoopHandler() {
   player.addEventListener('timeupdate', loopHandler);
 }
 
+function detachLoopHandler() {
+  if (player) {
+    player.removeEventListener('timeupdate', loopHandler);
+  }
+}
+
 function loopHandler() {
   if (loopActive && player.currentTime >= loopEnd) {
     player.currentTime = loopStart;
@@ -55,27 +64,40 @@ function loopHandler() {
   }
 }
 
+function disconnectObserver() {
+  if (observer) {
+    observer.disconnect();
+    observer = null;
+  }
+}
+
 function setupObserver() {
-  if (observer) observer.disconnect();
+  disconnectObserver(); // Önceki observer varsa kapatıyoruz
   observer = new MutationObserver(() => {
-    player = findPlayer();
-    if (player && loopActive) {
-      attachLoopHandler();
-      observer.disconnect();
+    const newPlayer = findPlayer();
+    if (newPlayer && newPlayer !== player) {
+      player = newPlayer;
+      if (loopActive) {
+        attachLoopHandler();
+        showPageToast(`Loop: ${loopStart}-${loopEnd}s (Player reattached)`);
+      }
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
-function periodicPlayerCheck() {
-  if (!player) {
-    player = findPlayer();
-    if (player && loopActive) {
-      attachLoopHandler();
-    }
+function initializePlayer() {
+  player = findPlayer();
+  if (player && loopActive) {
+    attachLoopHandler();
   }
+  // Oynatıcıdaki dinamik değişiklikleri yakalamak için observer’ı başlatıyoruz.
+  setupObserver();
 }
-setInterval(periodicPlayerCheck, 3000);
+
+document.addEventListener('DOMContentLoaded', () => {
+  initializePlayer();
+});
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.action === "enableLoop") {
@@ -93,9 +115,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     }
   } else if (msg.action === "disableLoop") {
     loopActive = false;
-    if (player) {
-      player.removeEventListener('timeupdate', loopHandler);
-    }
+    detachLoopHandler();
     showPageToast("Loop devre dışı");
     sendResponse({ status: "loop disabled" });
   } else if (msg.action === "preview") {
