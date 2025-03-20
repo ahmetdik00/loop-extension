@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "YouTube Music Loop Controller",
-  "version": "1.6",
+  "version": "1.0.1",
   "description": "YouTube Music üzerinde belirli zaman aralıklarını döngüye alır. Kısayol tuşları, detaylı hata loglama, modern tasarım ve mesaj kontrolü içerir.",
   "permissions": ["scripting", "activeTab", "storage"],
   "background": {
@@ -24,7 +24,8 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "48": "icon48.png"
+      "48": "icon48.png",
+      "128": "icon128.png"
     }
   },
   "content_scripts": [
