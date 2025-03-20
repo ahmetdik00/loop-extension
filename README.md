@@ -46,25 +46,6 @@ YouTube Music Döngü Kontrolü, YouTube Music üzerinde belirli aralıkları d�
    - `Ctrl+Shift+L`: Döngüyü aç/kapat
    - `Ctrl+Shift+P`: Önizleme yap
 
-## Gelecekte Eklenebilecek Özellikler
-Projeyi daha da geliştirerek aşağıdaki özellikleri ekleyebiliriz:
-
-- **Dinamik Oynatıcı Bilgileri ve Otomatik Ayarlamalar:**
-  - Oynatıcının toplam süresine göre slider limitlerinin otomatik ayarlanması.
-  - Oynatıcının zaman çizelgesinde döngü segmentlerinin görsel olarak işaretlenmesi.
-
-- **Gelişmiş Döngü Yönetimi:**
-  - Kullanıcının birden fazla döngü segmentini kaydedebilmesi ve arasında geçiş yapabilmesi.
-  - Kullanıcı tarafından özelleştirilebilir kısayol tuşları.
-
-- **Kullanıcı Deneyimini Artıran Ek Özellikler:**
-  - Tema seçenekleri (örneğin, açık/koyu mod) ve arayüz özelleştirmeleri.
-  - Gelişmiş bildirim ayarları: Snackbar/Toast süreleri ve konumunun kullanıcı tarafından ayarlanması.
-
-- **Arka Plan İşlemleri ve İstatistik:**
-  - Detaylı hata loglaması ve kullanıcı davranış analitiği ile raporlama.
-  - Gelişmiş MutationObserver yönetimi ile dinamik DOM değişikliklerine daha iyi yanıt.
-
 ## Katkıda Bulunma
 Katkılarınız bizim için değerlidir! Hata bildirimi, özellik talebi veya pull request’leriniz için lütfen [GitHub Issues](https://github.com/ahmetdik00/loop-extension/issues) üzerinden iletişime geçin. Projeye katkıda bulunmadan önce kod standartlarına uymanız rica olunur.
 
