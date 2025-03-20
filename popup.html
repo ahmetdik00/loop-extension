@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Loop Kontrol</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #121212;
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      padding: 20px;
+      width: 320px;
+    }
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 500;
+      color: #1db954;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    input[type="range"] {
+      width: 100%;
+      margin-top: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #1db954;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+    button:hover { background-color: #17a44d; }
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1db954;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <h3>Loop Kontrol</h3>
+  
+  <div class="form-group">
+    <label for="start">Başlangıç (saniye):</label>
+    <input type="number" id="start" value="60" min="0">
+    <input type="range" id="startSlider" min="0" max="600" value="60">
+  </div>
+  
+  <div class="form-group">
+    <label for="end">Bitiş (saniye):</label>
+    <input type="number" id="end" value="130" min="0">
+    <input type="range" id="endSlider" min="0" max="600" value="130">
+  </div>
+  
+  <button id="apply">Döngüyü Aktif Et</button>
+  <button id="preview">Önizleme Yap</button>
+  <button id="disable">Döngüyü Kapat</button>
+  
+  <div id="toast"></div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
